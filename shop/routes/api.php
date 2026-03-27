@@ -13,5 +13,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::apiResource('/card', CardController::class)->only(['store', 'destroy']);
     Route::post('logout', [AuthController::class, 'logout']);
     Route::get('user', [AuthController::class, 'user']);
-    Route::apiResource('/comment', CommentController::class)->only(['store']);
+    Route::post('/card/{card}/comment/', [CommentController::class, 'store']);
 });

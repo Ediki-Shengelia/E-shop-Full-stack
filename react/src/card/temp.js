@@ -10,5 +10,5 @@ export const cardAPI = {
     }),
   remove: (id) => api.delete(`api/card/${id}`),
   show: (id) => api.get(`api/card/${id}`),
-  addComment: (payload) => api.post("api/comment/", payload),
+  addComment: (cardId,payload) => api.post(`api/card/${cardId}/comment/`, payload),
 };

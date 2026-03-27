@@ -29,10 +29,12 @@ export function useCard() {
     await cardAPI.remove(id);
     setCards((prev) => prev.filter((p) => p.id !== id));
   }
-  async function addComment(payload) {
+  async function addComment(id, payload) {
     setErr("");
     try {
-      const res = await cardAPI.addComment(payload);
+      const res = await cardAPI.addComment(id, {
+        comment: payload,
+      });
       const newComm = res.data.data ?? res.data;
       setCards((prev) => [...prev, newComm]);
     } catch (error) {}
@@ -40,5 +42,5 @@ export function useCard() {
   useEffect(() => {
     fetchCard();
   }, []);
-  return { deleteCard, createCards, loading, cards, err, setErr,addComment };
+  return { deleteCard, createCards, loading, cards, err, setErr, addComment };
 }

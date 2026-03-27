@@ -10,8 +10,9 @@ const ShowCard = () => {
 const [text,setText]=useState("");
   function submit(e){
     e.preventDefault();
-    addComment(text)
-    console.log(cards);
+    addComment(card.id,text)
+    
+    setText("")
     
   }
   async function fetchData() {
@@ -34,7 +35,7 @@ const [text,setText]=useState("");
   <p>new : {card.new_price}</p>
   <p>{card.description}</p>
   <form onSubmit={submit}>
-    <textarea name="comment" id="" onChange={(e)=>setText(e.target.value)}></textarea>
+    <textarea name="comment" id="" value={text} onChange={(e)=>setText(e.target.value)}></textarea>
     <button>comment</button>
   </form>
   </div>;
