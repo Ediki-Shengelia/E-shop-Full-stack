@@ -47,7 +47,7 @@ class CardController extends Controller
      */
     public function show(Card $card)
     {
-        return new CardResource($card);
+        return new CardResource($card->load('comments.user'));
     }
 
     /**

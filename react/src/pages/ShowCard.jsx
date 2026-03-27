@@ -34,6 +34,18 @@ const [text,setText]=useState("");
   <p>Old: {card.old_price}</p>
   <p>new : {card.new_price}</p>
   <p>{card.description}</p>
+<div>
+    <p>Comments:</p>
+    {card.comments && card.comments.map((e) => (
+        <p key={e.id}>
+           <span style={{color:'red'}}> {e.user?.name}:</span>
+          <span>
+            {e.comment}
+          </span>
+         
+        </p>
+    ))}
+</div>
   <form onSubmit={submit}>
     <textarea name="comment" id="" value={text} onChange={(e)=>setText(e.target.value)}></textarea>
     <button>comment</button>
