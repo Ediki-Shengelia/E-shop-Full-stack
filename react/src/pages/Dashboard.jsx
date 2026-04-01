@@ -5,11 +5,12 @@ import CardForm from "../card/CardForm";
 import { path } from "../routes/path";
 import NotificationMenu from "./NotificationMenu";
 import { AuthContext } from "../auth/AuthContext";
+import { addToCart } from "../lib/cart";
+import Cart from "./Cart";
 const Dashboard = () => {
   const { logout } = useContext(AuthContext);
   const navigate = useNavigate();
   const { deleteCard, createCards, loading, cards, err, setErr } = useCard();
-  const [deletingId, setDeletingId] = useState(null);
   function handleCreate(payload) {
     setErr("");
 
@@ -21,7 +22,10 @@ const Dashboard = () => {
 
     deleteCard(id);
   }
-
+  function handleAddToCart(e, id) {
+    e.stopPropagation(); // important (prevents navigation)
+    addToCart(id);
+  }
   return (
     <div>
       Dashboard
@@ -46,11 +50,18 @@ const Dashboard = () => {
                 <span className="new">{el.new_price}</span>
               </div>
             </div>
+
             <button onClick={(e) => handleDelete(e, el.id)}>Delete</button>
+
+            {/* ✅ NEW BUTTON */}
+            <button onClick={(e) => handleAddToCart(e, el.id)}>
+              Add to Cart
+            </button>
           </li>
         ))}
       </ul>
       <NotificationMenu />
+      <Cart/>
     </div>
   );
 };

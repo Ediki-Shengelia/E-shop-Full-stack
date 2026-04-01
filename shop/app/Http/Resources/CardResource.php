@@ -22,7 +22,8 @@ class CardResource extends JsonResource
             'old_price' => $this->old_price,
             'new_price' => $this->new_price,
             'user_id' => $this->user->id,
-            'comments' => CommentResource::collection($this->whenLoaded('comments'))
+            'comments' => CommentResource::collection($this->whenLoaded('comments')),
+         
         ];
     }
 }

@@ -14,10 +14,14 @@ class User extends Authenticatable
     /** @use HasFactory<UserFactory> */
     use HasFactory, Notifiable, HasApiTokens;
 
-    public function cards()
+    public function cardsInCart()
     {
-        return $this->hasMany(Card::class);
+        // Change 'cart' to 'carts' to match your migration file
+        return $this->belongsToMany(Card::class, 'carts')
+            ->withPivot('quantity')
+            ->withTimestamps();
     }
+
     /**
      * The attributes that are mass assignable.
      *
