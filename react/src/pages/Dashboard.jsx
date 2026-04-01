@@ -8,7 +8,7 @@ import { AuthContext } from "../auth/AuthContext";
 import { addToCart } from "../lib/cart";
 import Cart from "./Cart";
 const Dashboard = () => {
-  const { logout } = useContext(AuthContext);
+  const { logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { deleteCard, createCards, loading, cards, err, setErr } = useCard();
   function handleCreate(payload) {
@@ -51,7 +51,9 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <button onClick={(e) => handleDelete(e, el.id)}>Delete</button>
+            {user.id == el.user_id ? (
+              <button onClick={(e) => handleDelete(e, el.id)}>Delete</button>
+            ) : null}
 
             {/* ✅ NEW BUTTON */}
             <button onClick={(e) => handleAddToCart(e, el.id)}>
@@ -61,7 +63,7 @@ const Dashboard = () => {
         ))}
       </ul>
       <NotificationMenu />
-      <Cart/>
+      <Cart />
     </div>
   );
 };
