@@ -7,10 +7,15 @@ import NotificationMenu from "./NotificationMenu";
 import { AuthContext } from "../auth/AuthContext";
 import { addToCart } from "../lib/cart";
 import Cart from "./Cart";
+import CardList from "./CardList";
+import { likeAPI } from "../lib/like";
+import CardItem from "./CardItem";
 const Dashboard = () => {
   const { logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
   const { deleteCard, createCards, loading, cards, err, setErr } = useCard();
+
+
   function handleCreate(payload) {
     setErr("");
 
@@ -28,8 +33,13 @@ const Dashboard = () => {
   }
   return (
     <div>
-      Dashboard
+      <div style={{ backgroundColor: "black", padding: "20px" }}>
+        <h1 style={{ textAlign: "center", color: "red" }}>
+          Dashboard For___ <span style={{ color: "yellow" }}>{user.name}</span>
+        </h1>
+      </div>
       <button onClick={() => logout()}>Logout </button>
+      <CardList />
       <div>
         <CardForm onCreate={handleCreate} />
       </div>
@@ -59,6 +69,7 @@ const Dashboard = () => {
             <button onClick={(e) => handleAddToCart(e, el.id)}>
               Add to Cart
             </button>
+           <CardItem el={el}/>
           </li>
         ))}
       </ul>

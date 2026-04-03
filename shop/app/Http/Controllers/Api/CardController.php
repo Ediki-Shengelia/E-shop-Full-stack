@@ -16,11 +16,18 @@ class CardController extends Controller
      */
     public function index()
     {
-        $cards = Card::query()->latest()->get();
+        $cards = Card::query()
+            ->withCount('likes')
+            ->withExists(['likes as liked_by_me' => function ($query) {
+                $query->where('user_id', auth()->id());
+            }])
+            ->when(request('search'), function ($query, $search) {
+                $query->title($search);
+            })
+            ->get();
 
         return CardResource::collection($cards);
     }
-
     /**
      * Store a newly created resource in storage.
      */

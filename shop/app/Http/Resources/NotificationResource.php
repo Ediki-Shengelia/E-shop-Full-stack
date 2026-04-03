@@ -16,8 +16,8 @@ class NotificationResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'card_id' => $this->data['card_id'],
-            'message' => $this->data['message'],
+            'card_id' => $this->data['card_id'] ?? null,
+            'message' => $this->data['message'] ?? '',
             'is_read' => $this->read_at !== null
         ];
     }

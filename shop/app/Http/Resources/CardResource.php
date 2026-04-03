@@ -21,9 +21,15 @@ class CardResource extends JsonResource
             'description' => $this->description,
             'old_price' => $this->old_price,
             'new_price' => $this->new_price,
-            'user_id' => $this->user->id,
+
+            // FIX: Access the column directly to save database performance
+            'user_id' => $this->user_id,
+
             'comments' => CommentResource::collection($this->whenLoaded('comments')),
-         
+
+            // These are correctly mapped from your withCount/withExists in the controller
+            'likes_count' => (int) ($this->likes_count ?? 0),
+            'liked_by_me' => (bool) ($this->liked_by_me ?? false),
         ];
     }
 }
