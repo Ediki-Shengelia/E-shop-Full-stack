@@ -1,6 +1,6 @@
 import React, { useContext, useState } from "react";
 import { AuthContext } from "../auth/AuthContext";
-import { path } from "../routes/path";
+import { path } from "../routes/path";import "../App.css";
 import { useNavigate } from "react-router-dom";
 const Register = () => {
   const { register } = useContext(AuthContext);
@@ -56,34 +56,59 @@ const Register = () => {
     }
   }
   return (
-    <div>
-      <h1>Register</h1>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" required onChange={handleChange} id="" />
-        {validationErr.name ? <p>{validationErr.name}</p> : null}
-        <br />
+    <div className="auth-page">
+  <div className="auth-card">
+    <h1 className="auth-title">Register</h1>
+    <form className="auth-form" onSubmit={handleSubmit}>
+      <div className="form-group">
+        <label>Full Name</label>
+        <input 
+          type="text" 
+          name="name" 
+          className={`auth-input ${validationErr.name ? 'input-error' : ''}`}
+          required 
+          onChange={handleChange} 
+          placeholder="John Doe"
+        />
+        {validationErr.name && <span className="validation-msg">{validationErr.name}</span>}
+      </div>
+
+      <div className="form-group">
+        <label>Email</label>
         <input
           type="email"
           name="email"
+          className={`auth-input ${validationErr.email ? 'input-error' : ''}`}
           required
           onChange={handleChange}
-          id=""
+          placeholder="example@gmail.com"
         />
-        {validationErr.email ? <p>{validationErr.email}</p> : null}
-        <br />
+        {validationErr.email && <span className="validation-msg">{validationErr.email}</span>}
+      </div>
+
+      <div className="form-group">
+        <label>Password</label>
         <input
           type="password"
           name="password"
+          className={`auth-input ${validationErr.password ? 'input-error' : ''}`}
           onChange={handleChange}
           required
-          id=""
+          placeholder="Min 6 characters"
         />
-        {validationErr.password ? <p>{validationErr.password}</p> : null}
-        <br />
-        {err ? <p>{err}</p> : null}
-        <button>Register</button>
-      </form>
-    </div>
+        {validationErr.password && <span className="validation-msg">{validationErr.password}</span>}
+      </div>
+
+      {err && <p className="error-text">{err}</p>}
+      
+      <button className="btn-auth">Create Account</button>
+      
+      <p className="auth-footer">
+        Already have an account? <span onClick={() => navigate('/login')}>Login</span>
+      </p>
+    </form>
+  </div>
+</div>
   );
 };
 

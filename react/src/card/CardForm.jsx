@@ -14,9 +14,9 @@ const CardForm = ({ onCreate }) => {
     const val = type === "file" ? files[0] : value;
     setData((prev) => ({ ...prev, [name]: val }));
   }
+
   function submit(e) {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append("title", data.title);
     formData.append("description", data.description);
@@ -28,8 +28,6 @@ const CardForm = ({ onCreate }) => {
     }
 
     onCreate(formData);
-
-
     setData({
       title: "",
       description: "",
@@ -37,36 +35,64 @@ const CardForm = ({ onCreate }) => {
       old_price: "",
       card_image: null,
     });
-
     e.target.reset();
   }
+
   return (
-    <form onSubmit={submit}>
-      <input type="file" name="card_image" id="" onChange={changeFunc} />
-      <br />
-      <input
-        type="text"
-        name="title"
-        required
-        placeholder="Title"
-        id=""
-        onChange={changeFunc}
-      />
-      <br />
-      <textarea name="description" id="" onChange={changeFunc}></textarea>
-      <br />
-      <input type="number" name="old_price" id="" onChange={changeFunc} />
-      <br />
-      <input
-        type="number"
-        name="new_price"
-        required
-        id=""
-        onChange={changeFunc}
-      />
-      <br />
-      <button>Add Card</button>
-    </form>
+    <div className="form-wrapper">
+      <form onSubmit={submit} className="card-form">
+        <h3 className="form-title">Create New Post</h3>
+        
+        <div className="form-group">
+          <label className="form-label">Product Image</label>
+          <input type="file" name="card_image" className="file-input" onChange={changeFunc} />
+        </div>
+
+        <div className="form-group">
+          <input
+            type="text"
+            name="title"
+            className="form-input"
+            required
+            placeholder="Title"
+            onChange={changeFunc}
+          />
+        </div>
+
+        <div className="form-group">
+          <textarea 
+            name="description" 
+            className="form-textarea" 
+            placeholder="Describe your product..." 
+            onChange={changeFunc}
+          ></textarea>
+        </div>
+
+        <div className="form-row">
+          <div className="form-group">
+            <input 
+              type="number" 
+              name="old_price" 
+              className="form-input" 
+              placeholder="Old Price ($)" 
+              onChange={changeFunc} 
+            />
+          </div>
+          <div className="form-group">
+            <input
+              type="number"
+              name="new_price"
+              className="form-input"
+              required
+              placeholder="New Price ($)"
+              onChange={changeFunc}
+            />
+          </div>
+        </div>
+
+        <button type="submit" className="btn-submit">Add Card</button>
+      </form>
+    </div>
   );
 };
 

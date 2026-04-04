@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { notificationApi } from "../lib/notificationApi";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";import '../App.css';
 const NotificationMenu = () => {
   const [open, setOpen] = useState(false);
   const [unread, setUnread] = useState([]);
@@ -45,21 +45,29 @@ const NotificationMenu = () => {
     }
   }
   return (
-    <div>
-      <button onClick={() => setOpen(!open)}>
-        <span>🔔</span>
-        <span>{unreadCount}</span>
-      </button>
-      {open && (
-        <ul>
-            <button style={{color:'red',cursor:"pointer"}} onClick={()=>markAllAsRead()}>Read all</button>
-          {unread.map((e) => (
-            <p key={e.id} style={{cursor:"pointer"}} onClick={()=>markAsRead(e.id)}>{e.message}</p>
-          ))}
-        </ul>
-      )}
-      
+  <div className="notification-wrapper">
+  <button className="notification-btn" onClick={() => setOpen(!open)}>
+    <span className="bell-icon">🔔</span>
+    {unreadCount > 0 && <span className="notif-count">{unreadCount}</span>}
+  </button>
+  
+  {open && (
+    <div className="notification-dropdown">
+      <div className="notif-header">
+        <span>Notifications</span>
+        <button className="btn-read-all" onClick={() => markAllAsRead()}>Mark all as read</button>
+      </div>
+      <ul className="notif-list">
+        {unread.map((e) => (
+          <li key={e.id} className="notif-item" onClick={() => markAsRead(e.id)}>
+            {e.message}
+          </li>
+        ))}
+        {unread.length === 0 && <li className="notif-empty">No new notifications</li>}
+      </ul>
     </div>
+  )}
+</div>
   );
 };
 

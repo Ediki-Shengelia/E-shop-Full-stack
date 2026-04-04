@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { api } from "../lib/api";
+import { api } from "../lib/api";import '../App.css';
 const CardList = () => {
   const [cards, setCards] = useState([]);
   const [search, setSearch] = useState("");
@@ -26,25 +26,23 @@ const CardList = () => {
   
   }, [search]);
   return (
-    <div>
-      <label htmlFor="search">search</label>
-      <input
-        type="text"
-        name="search"
-        id="search"
-        onChange={(e) => setSearch(e.target.value)}
-        value={search}
-      />
-      <div>
-        {cards.length > 0 ? (
-          cards.map((e) => (
-            <li key={e.id}>
-              <h4>{e.title}</h4>
-            </li>
-          ))
-        ) : null}
-      </div>
-    </div>
+    <div className="search-container">
+  <label htmlFor="search" className="search-label">Search Products</label>
+  <input
+    type="text"
+    className="search-input"
+    onChange={(e) => setSearch(e.target.value)}
+    value={search}
+    placeholder="Type to search..."
+  />
+  <ul className="search-results">
+    {cards.length > 0 && cards.map((e) => (
+      <li key={e.id} className="search-item">
+        <h4>{e.title}</h4>
+      </li>
+    ))}
+  </ul>
+</div>
   );
 };
 

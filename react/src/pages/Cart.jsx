@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { api } from "../lib/api";
-
+import '../App.css';
 const Cart = () => {
   const [cardItems, setCartItems] = useState([]);
   const [open, setOpen] = useState(false);
@@ -28,36 +28,30 @@ const Cart = () => {
   }, 0);
 
   return (
-    <div>
-      <button onClick={() => setOpen(!open)}>
-        🛒 <span style={{ color: "red" }}>{count}</span>
-      </button>
+    <div className="cart-wrapper">
+  <button className="cart-toggle" onClick={() => setOpen(!open)}>
+    🛒 <span className="cart-badge">{count}</span>
+  </button>
 
-      {open && (
-        <ul>
-          {cardItems.map((e) => (
-            <li
-              style={{ border: "1px solid red", marginTop: "5px" }}
-              key={e.id}
-            >
-              {/* Make sure 'card' exists before accessing title */}
-              {e.card?.title}
-              <span style={{ color: "red" }}>
-                each product price is- ${e.card?.new_price}
-              </span>
-              {/* Show the individual quantity for this item */}
-              <span> (Qty: {e.quantity})</span>
-              <span style={{ color: "blueviolet" }}>
-                {e.quantity * e.card.new_price}$
-              </span>
-              
-            </li>
-          ))}
-          <h2>Total: ${totalPrice}</h2>
-          
-        </ul>
-      )}
+  {open && (
+    <div className="cart-dropdown">
+      <ul className="cart-list">
+        {cardItems.map((e) => (
+          <li className="cart-item" key={e.id}>
+            <div className="cart-item-info">
+              <span className="cart-item-title">{e.card?.title}</span>
+              <span className="cart-item-price">${e.card?.new_price} x {e.quantity}</span>
+            </div>
+            <span className="cart-item-total">{e.quantity * e.card?.new_price}$</span>
+          </li>
+        ))}
+      </ul>
+      <div className="cart-footer">
+        <h2 className="total-price">Total: ${totalPrice}</h2>
+      </div>
     </div>
+  )}
+</div>
   );
 };
 export default Cart;
